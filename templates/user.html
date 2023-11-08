@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}User Details{% endblock %}
+
+
+{% block content %}
+
+    <h2>{{user.first_name}} {{user.last_name}}</h2>
+
+    <img src='{{user.image_url}}'>
+
+    <form action="/users/{{user.id}}/edit">
+        <button>Edit User</button>
+    </form>
+
+    <form action="/users/{{user.id}}/delete" method="POST">
+        <button>Delete User</button>
+    </form>
+
+{% endblock %}
