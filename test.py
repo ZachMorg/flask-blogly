@@ -1,6 +1,6 @@
 from unittest import TestCase
 from app import app
-from models import db, User
+from models import db, User, Post
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///flask_blogly_test'
 app.config['SQLALCHEMY_ECHO'] = False
@@ -17,16 +17,15 @@ class BloglyTests(TestCase):
 
     def startUp(self):
         User.query.delete()
+        Post.query.delete()
         user = User(first_name='Test', last_name='User', image_url='')
+        post = Post(title='TEST', context='test', user_id=1)
         db.session.add(user)
+        db.session.add(post)
         db.session.commit()
         
         self.user_id = user.id
-
-
-    def tearDown(self):
-        with app.app_context():
-            db.session.rollback()
+        self.post_id = post.id
 
         
     def test_index(self):
@@ -45,6 +44,7 @@ class BloglyTests(TestCase):
             html = response.get_data(as_text=True)
 
             self.assertIn('<button>Edit User</button>', html)
+            self.assertIn('<li>', html)
 
 
     def test_edit(self):
