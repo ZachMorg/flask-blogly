@@ -1,0 +1,12 @@
+nav{
+    display: flex;
+    align-items: center;
+}
+
+nav > a{
+    padding: 0px 10px;
+}
+
+div{
+    display: flex;
+}
